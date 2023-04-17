@@ -1,0 +1,33 @@
+# networks:
+#   default:
+#     external: true
+#     name: db
+#   db:
+#     external: true
+#     name: db
+
+services:
+  pgsql:
+    container_name: db-pgsql
+    environment:
+      DB_HOST: db-pgsql
+      DB_NAME: postgres
+      DB_PASS: main_db
+      DB_USER: postgres
+      POSTGRES_PASSWORD: main_db
+    image: postgres:15.2-alpine
+    # networks:
+    #   db:
+    #     ipv4_address: 
+    shm_size: 2gb
+    ports:
+    - 5432:5432/tcp
+    restart: always
+    volumes:
+    - /etc/timezone:/etc/timezone:rw
+    - /etc/localtime:/etc/localtime:rw
+    # - /srv/oc/db/sql:/var/lib/postgresql/data:rw
+    - ./config/pg_hba.conf:/etc/postgres/postgresql/data/pg_hba.conf:rw
+    - ./config/postgresql.conf:/etc/postgres/postgresql.conf:rw
+version: '2.3'
+
