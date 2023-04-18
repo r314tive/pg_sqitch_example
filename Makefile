@@ -7,13 +7,13 @@ sqitch_install:
 	./sqitch help
 
 # sqitch
-SQITCH=./sqitch
+SQITCH=cd src && ./sqitch
 
 # H=hostname
 H_=$(or $H,localhost)
 SSH=ssh -C root@$(H_)
 # D=dbname
-F=$(or $D,$(DBNAME))
+F=$(or $D,${DBNAME})
 P=db:pg://${PGUSER}@${PGHOST}:${PGPORT}/$F
 
 deploy status verify plan:

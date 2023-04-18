@@ -1,0 +1,9 @@
+%syntax-version=1.0.0
+%project=pg_sqitch_example
+%uri=https://github.com/r314tive/pg_sqitch_example
+
+appschema 2023-04-18T07:01:33Z r314tive <tanswis42@gmail.com> # Add schemas alpha and beta for app
+roles 2023-04-18T11:47:09Z r314tive <tanswis42@gmail.com> # roles globals
+grants 2023-04-18T12:24:10Z r314tive <tanswis42@gmail.com> # grants
+@0.0.1 2023-04-18T12:54:38Z r314tive <tanswis42@gmail.com> # rework roles
+roles [roles@0.0.1] 2023-04-18T12:55:01Z r314tive <tanswis42@gmail.com> # add new role
