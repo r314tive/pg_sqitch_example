@@ -1,27 +1,47 @@
 # networks:
-#   default:
-#     external: true
-#     name: db
 #   db:
-#     external: true
-#     name: db
+#     driver: bridge
+#     driver_opts:
+#       com.docker.network.enable_ipv6: "false"
+#     internal: true
+#     ipam:
+#       driver: default
+#       config:
+#       - subnet: 172.20.0.0/24
+
+networks:
+  # default:
+  #   external: true
+  #   name: zabbix_net_backend
+  zabbix-docker_default:
+    external: true
+    # name: zabbix_net_backend
+
 
 services:
   pgsql:
     container_name: db-pgsql
+    expose:
+    - "5555"
+    ports:
+    - "5555:5555"
     environment:
       DB_HOST: db-pgsql
       DB_NAME: postgres
       DB_PASS: main_db
       DB_USER: postgres
+      DB_PORT: 5555
       POSTGRES_PASSWORD: main_db
     image: postgres:15.2-alpine
     # networks:
     #   db:
-    #     ipv4_address: 
+    #     aliases:
+    #     - pgsql
+    #     - db-pgsql
+    networks:
+      zabbix-docker_default:
+        ipv4_address: 172.22.0.10    
     shm_size: 2gb
-    ports:
-    - 5432:5432/tcp
     restart: always
     volumes:
     - /etc/timezone:/etc/timezone:rw
@@ -29,5 +49,6 @@ services:
     # - /srv/oc/db/sql:/var/lib/postgresql/data:rw
     - ./config/pg_hba.conf:/etc/postgres/postgresql/data/pg_hba.conf:rw
     - ./config/postgresql.conf:/etc/postgres/postgresql.conf:rw
+    command: -p 5555
 version: '2.3'
 
